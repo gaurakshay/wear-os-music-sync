@@ -39,11 +39,14 @@ todosApi.MapGet("/{id}", Results<Ok<Todo>, NotFound> (int id) =>
         : TypedResults.NotFound())
     .WithName("GetTodoById");
 
+Wear.OS.Sync.Server.Endpoints.FileEndpoints.Map(app);
+
 app.Run();
 
 public record Todo(int Id, string? Title, DateOnly? DueBy = null, bool IsComplete = false);
 
 [JsonSerializable(typeof(Todo[]))]
+[JsonSerializable(typeof(IEnumerable<string>))]
 internal partial class AppJsonSerializerContext : JsonSerializerContext
 {
 
